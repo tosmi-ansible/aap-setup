@@ -1,0 +1,27 @@
+ansible-navigator:
+  mode: stdout
+  enable-prompts: true
+
+  ansible:
+    config:
+      path: ./ansible.cfg
+    cmdline: "--ask-vault-pass"
+    inventory:
+      entries:
+        - ../aap-platform-inventory
+
+  execution-environment:
+    image: quay.io/tosmi-ansible/ee-lab:latest
+    environment-variables:
+      pass:
+        - K8S_AUTH_HOST
+        - K8S_AUTH_API_KEY
+    pull:
+      policy: missing
+    # volume-mounts:
+    #   - src: "/tmp/ansible-lab"
+    #     dest: "/tmp"
+    #     options: "Z"
+
+  logging:
+    level: critical
