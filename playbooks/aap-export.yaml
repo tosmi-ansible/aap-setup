@@ -14,8 +14,9 @@
   pre_tasks:
     - name: Clone the filetree export GIT repostory
       ansible.scm.git_retrieve:
+        branch:
+          name: main
         origin:
-          branch: main
           url: "https://github.com/tosmi-ansible/filetree-export.git"
           token: "{{ controller_github_token }}"
         parent_directory: /tmp/checkout
