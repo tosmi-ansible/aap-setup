@@ -31,7 +31,7 @@
             password: "{{ controller_password }}"
             method: POST
             force_basic_auth: true
-            validate_certs: "{{ controller_validate_certs }}"
+            validate_certs: "{{ controller_validate_certs|bool }}"
             status_code: 201
           register: authtoken_res
 

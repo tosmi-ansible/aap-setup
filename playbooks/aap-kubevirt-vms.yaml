@@ -1,78 +1,90 @@
 ---
-# - name: Create VM's required for an AAP installation
-#   gather_facts: false
-#   become: false
-#   hosts:
-#     - localhost
-#   roles:
-#     - kubevirt-vm
-#   vars:
-#     kubevirt_vms:
-#       namespace: aap
-#       ssh_public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYhjnWzsArZVyyTa1E6sDbH06rUGDAhAF3bf3pmeBtm toni@stderr.at
-#       vms:
-#         - name: controller01
-#           datasource: rhel9
-#           storage: 60Gi
-#           memory: 16Gi
-#           cores: 4
-#           mac: 02:e0:d7:00:00:0c
-#         - name: pgsql
-#           datasource: rhel9
-#           storage: 100Gi
-#           memory: 16Gi
-#           cores: 4
-#           mac: 02:e0:d7:00:00:0e
-#         - name: hub
-#           datasource: rhel9
-#           storage: 60Gi
-#           memory: 8Gi
-#           cores: 2
-#           mac: 02:e0:d7:00:00:14
-#         - name: events
-#           datasource: rhel9
-#           storage: 40Gi
-#           memory: 16Gi
-#           cores: 4
-#           mac: 02:e0:d7:00:00:12
-#         - name: exec01
-#           datasource: rhel9
-#           storage: 40Gi
-#           memory: 8Gi
-#           cores: 2
-#           mac: 02:e0:d7:00:00:13
+- name: Create VM's required for an AAP installation
+  gather_facts: false
+  become: false
+  hosts:
+    - localhost
+  roles:
+    - kubevirt-vm
+  vars:
+    kubevirt_vms:
+      namespace: aap
+      ssh_public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYhjnWzsArZVyyTa1E6sDbH06rUGDAhAF3bf3pmeBtm toni@stderr.at
+      vms:
+        - name: controller01
+          datasource: rhel9
+          storage: 60Gi
+          memory: 16Gi
+          cores: 4
+          mac: 02:e0:d7:00:00:16
+        - name: controller02
+          datasource: rhel9
+          storage: 60Gi
+          memory: 16Gi
+          cores: 4
+          mac: 02:e0:d7:00:00:0c
+        - name: pgsql
+          datasource: rhel9
+          storage: 100Gi
+          memory: 16Gi
+          cores: 4
+          mac: 02:e0:d7:00:00:0e
+        - name: hub
+          datasource: rhel9
+          storage: 60Gi
+          memory: 8Gi
+          cores: 2
+          mac: 02:e0:d7:00:00:14
+        - name: events
+          datasource: rhel9
+          storage: 40Gi
+          memory: 16Gi
+          cores: 4
+          mac: 02:e0:d7:00:00:12
+        - name: exec01
+          datasource: rhel9
+          storage: 40Gi
+          memory: 8Gi
+          cores: 2
+          mac: 02:e0:d7:00:00:13
+        - name: exec02
+          datasource: rhel9
+          storage: 40Gi
+          memory: 8Gi
+          cores: 2
+          mac: 02:e0:d7:00:00:15
 
-# - name: Red Hat registration
-#   gather_facts: false
-#   become: true
-#   remote_user: admin
-#   hosts:
-#     - namespace_aap
-#   tasks:
-#     - name: Run subscription-manager registery
-#       community.general.redhat_subscription:
-#         state: present
-#         org_id: 13048846
-#         activationkey: Playground
+- name: Red Hat registration
+  gather_facts: false
+  become: true
+  remote_user: admin
+  hosts:
+    - namespace_aap
+  tasks:
+    - name: Run subscription-manager registery
+      community.general.redhat_subscription:
+        state: present
+        org_id: "13048846"
+        activationkey: Playground
 
-#     - name: Register the insights client
-#       redhat.insights.insights_register:
-#         state: present
-#       become: true
+    - name: Register the insights client
+      redhat.insights.insights_register:
+        state: present
+      become: true
 
-#     - name: Set a FQDN hostname (required for AAP)
-#       ansible.builtin.hostname:
-#         name: "{{ inventory_hostname }}"
-#         use: systemd
+    - name: Set a FQDN hostname (required for AAP)
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+        use: systemd
 
-#     - name: Install packages (required for AAP)
-#       ansible.builtin.dnf:
-#         state: present
-#         name:
-#           - ansible-core
-#           - wget
-#           - git
-#           - rsync
+    - name: Install packages (required for AAP)
+      ansible.builtin.dnf:
+        state: present
+        name:
+          - ansible-core
+          - wget
+          - git
+          - rsync
 
 - name: Prepare AAP installation
   gather_facts: false
@@ -88,7 +100,7 @@
         dest: /etc/pki/ca-trust/source/anchors/tntinfra-ca.crt
       register: controller_copy_ca_trust
     - name: Update system CA trust store
-      command: update-ca-trust
+      ansible.builtin.command: update-ca-trust
       when: controller_copy_ca_trust.changed
 
   roles:
