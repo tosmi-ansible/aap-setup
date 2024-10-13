@@ -1,7 +1,7 @@
 ---
 - name: Apply AAP configuration from a filetree
   hosts:
-    - controller01.lan.stderr.at
+    - localhost
   connection: local
   gather_facts: false
   vars:
