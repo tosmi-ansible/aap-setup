@@ -6,7 +6,7 @@ collections:
     source: https://console.redhat.com/api/automation-hub/
 
   - name: redhat.openshift_virtualization
-    version: 2.0.0
+    version: 2.1.0
     source: https://console.redhat.com/api/automation-hub/
 
   - name: redhat.insights
@@ -14,21 +14,25 @@ collections:
     source: https://console.redhat.com/api/automation-hub/
 
   - name: ansible.posix
-    version: 1.5.4
+    version: 1.6.1
     source: https://galaxy.ansible.com
 
   - name: community.general
-    version: 9.2.0
+    version: 9.5.0
     source: https://galaxy.ansible.com
 
   - name: ansible.scm
-    version: 2.0.0
+    version: 3.0.0
     source: https://console.redhat.com/api/automation-hub/
 
   - name: ansible.controller
-    version: 4.5.8
+    version: 4.6.1
+    source: https://console.redhat.com/api/automation-hub/
+
+  - name: ansible.platform
+    version: 2.5.0
     source: https://console.redhat.com/api/automation-hub/
 
   - name:  redhat.satellite
-    version: 4.1.0
+    version: 4.2.0
     source: https://console.redhat.com/api/automation-hub/
