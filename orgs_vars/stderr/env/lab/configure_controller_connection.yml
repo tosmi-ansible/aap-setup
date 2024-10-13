@@ -1,0 +1,7 @@
+---
+controller_username: admin
+controller_password: changeme
+# controller_hostname: controller01.lan.stderr.at:8443
+gateway_hostname: gateway01.lan.stderr.at
+controller_validate_certs: False
+controller_configuration_filetree_read_secure_logging: false
