@@ -1,0 +1,5 @@
+controller_organizations:
+  - name: "Test Organization 1"
+    description: "A simple test organization"
+  - name: "Test Organization 2"
+    description: "Another test organization"
