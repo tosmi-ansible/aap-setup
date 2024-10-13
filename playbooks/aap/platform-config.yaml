@@ -1,0 +1,53 @@
+---
+# ansible-playbook config-controller-filetree.yml --tags ${CONTROLLER_OBJECT}
+#   -e "{orgs: ${ORGANIZATION}, dir_orgs_vars: orgs_vars, env: ${ENVIRONMENT} }"
+# --vault-password-file ./.vault_pass.txt
+# -e @orgs_vars/env/${ENVIRONMENT}/configure_connection_controller_credentials.yml
+- name: Apply AAP configuration from a filetree
+  hosts:
+    - localhost
+  connection: local
+  gather_facts: false
+  vars:
+    controller_configuration_projects_async_retries: 120
+    controller_configuration_projects_async_delay: 2
+    controller_username: "{{ controller_username}}"
+    controller_password: "{{ controller_password }}"
+    controller_hostname: "{{ gateway_hostname}}"
+    controller_validate_certs: "{{ vault_controller_validate_certs or lookup('env', 'CONTROLLER_VERIFY_SSL') }}"
+    # filetree_controller_projects: "{{ dir_orgs_vars }}/{{ orgs }}/env/local/controller_projects.d/"
+    orgs: stderr
+  tasks:
+    - name: "Setup authentication (block)"
+      no_log: "{{ controller_configuration_filetree_read_secure_logging | default('false') }}"
+      when: controller_oauthtoken is not defined
+      tags:
+        - always
+      block:
+        - name: "Get the Authentication Token for the future requests"
+          ansible.platform.token:
+            gateway_hostname: "{{ controller_hostname }}"
+            gateway_username: "{{ controller_username }}"
+            gateway_password: "{{ controller_password }}"
+            validate_certs: "{{ controller_validate_certs|bool }}"
+          register: aap_token
+
+        - debug: var=aap_token
+
+        - debug: var=aap_token.ansible_facts.aap_token.created
+
+        - name: Create organization
+          ansible.platform.organization:
+            name: Test Organization
+            gateway_hostname: "{{ controller_hostname }}"
+            gateway_token: "{{ aap_token.ansible_facts.aap_token.token }}"
+            description: "This is a test organization"
+            validate_certs: "{{ controller_validate_certs|bool }}"
+
+  post_tasks:
+    - name: "Delete the Authentication Token used"
+      ansible.platform.token:
+        existing_token: "{{ aap_token }}"
+        state: absent
+      when: token is defined
+...
