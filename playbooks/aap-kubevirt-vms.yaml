@@ -5,9 +5,10 @@
   hosts:
     - localhost
   roles:
-    - kubevirt-vm
+    - tosmi.lab_utilities.kubevirt_vm
   vars:
     kubevirt_vms:
+      state: absent
       namespace: aap
       ssh_public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYhjnWzsArZVyyTa1E6sDbH06rUGDAhAF3bf3pmeBtm toni@stderr.at
       vms:
@@ -107,30 +108,30 @@
     - { role: infra.aap_utilities.aap_setup_download }
     - { role: infra.aap_utilities.aap_setup_prepare }
 
-- name: Deploy initial AAP config
-  gather_facts: false
-  remote_user: admin
-  become: true
-  hosts:
-    - controller01.lan.stderr.at
-  tasks:
-    - name: Configure initial LDAP authentication
-      delegate_to: localhost
-      ansible.controller.settings:
-        controller_host: "{{ controller_host }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        validate_certs: false
-        settings:
-          AUTH_LDAP_SERVER_URI: "{{ controller_ldap_server_uri }}"
-          AUTH_LDAP_BIND_DN: "{{ controller_ldap_bind_dn }}"
-          AUTH_LDAP_BIND_PASSWORD: "{{ controller_ldap_bind_password }}"
-          AUTH_LDAP_START_TLS: "{{ controller_ldap_start_tls }}"
-          AUTH_LDAP_USER_SEARCH: "{{ controller_ldap_user_search }}"
-          AUTH_LDAP_USER_ATTR_MAP: "{{ controller_ldap_user_attr_map }}"
-          AUTH_LDAP_GROUP_SEARCH: "{{ controller_ldap_group_search }}"
-          AUTH_LDAP_GROUP_TYPE: "{{ controller_ldap_group_type }}"
-          AUTH_LDAP_GROUP_TYPE_PARAMS: "{{ controller_ldap_group_type_params}}"
-          AUTH_LDAP_USER_FLAGS_BY_GROUP: "{{ controller_ldap_user_flags_by_group }}"
-          AUTH_LDAP_ORGANIZATION_MAP: "{{ controller_ldap_organization_map }}"
-          AUTH_LDAP_TEAM_MAP: "{{ controller_ldap_team_map }}"
+# - name: Deploy initial AAP config
+#   gather_facts: false
+#   remote_user: admin
+#   become: true
+#   hosts:
+#     - controller01.lan.stderr.at
+#   tasks:
+#     - name: Configure initial LDAP authentication
+#       delegate_to: localhost
+#       ansible.controller.settings:
+#         controller_host: "{{ controller_host }}"
+#         controller_username: "{{ controller_username }}"
+#         controller_password: "{{ controller_password }}"
+#         validate_certs: false
+#         settings:
+#           AUTH_LDAP_SERVER_URI: "{{ controller_ldap_server_uri }}"
+#           AUTH_LDAP_BIND_DN: "{{ controller_ldap_bind_dn }}"
+#           AUTH_LDAP_BIND_PASSWORD: "{{ controller_ldap_bind_password }}"
+#           AUTH_LDAP_START_TLS: "{{ controller_ldap_start_tls }}"
+#           AUTH_LDAP_USER_SEARCH: "{{ controller_ldap_user_search }}"
+#           AUTH_LDAP_USER_ATTR_MAP: "{{ controller_ldap_user_attr_map }}"
+#           AUTH_LDAP_GROUP_SEARCH: "{{ controller_ldap_group_search }}"
+#           AUTH_LDAP_GROUP_TYPE: "{{ controller_ldap_group_type }}"
+#           AUTH_LDAP_GROUP_TYPE_PARAMS: "{{ controller_ldap_group_type_params}}"
+#           AUTH_LDAP_USER_FLAGS_BY_GROUP: "{{ controller_ldap_user_flags_by_group }}"
+#           AUTH_LDAP_ORGANIZATION_MAP: "{{ controller_ldap_organization_map }}"
+#           AUTH_LDAP_TEAM_MAP: "{{ controller_ldap_team_map }}"
