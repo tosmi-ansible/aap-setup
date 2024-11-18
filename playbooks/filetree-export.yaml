@@ -40,7 +40,7 @@
   roles:
     - role: infra.controller_configuration.filetree_create
       vars:
-        output_path: /tmp/checkout/filetree-export
+        filetree_create_output_path: /tmp/checkout/filetree-export
     # - infra.controller_configuration.dispatch
 
   post_tasks:

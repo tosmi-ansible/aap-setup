@@ -11,10 +11,10 @@
   vars:
     controller_configuration_projects_async_retries: 120
     controller_configuration_projects_async_delay: 2
-    controller_username: "{{ controller_username}}"
-    controller_password: "{{ controller_password }}"
-    controller_hostname: "{{ gateway_hostname}}"
-    controller_validate_certs: "{{ vault_controller_validate_certs or lookup('env', 'CONTROLLER_VERIFY_SSL') }}"
+    controller_username: "{{ aap_username}}"
+    controller_password: "{{ aap_password_password }}"
+    controller_hostname: "{{ aap_hostname}}"
+    controller_validate_certs: "{{ aap_validate_certs }}"
     # filetree_controller_projects: "{{ dir_orgs_vars }}/{{ orgs }}/env/local/controller_projects.d/"
     orgs: stderr
   tasks:
@@ -26,15 +26,14 @@
       block:
         - name: "Get the Authentication Token for the future requests"
           ansible.platform.token:
-            gateway_hostname: "{{ controller_hostname }}"
-            gateway_username: "{{ controller_username }}"
-            gateway_password: "{{ controller_password }}"
-            validate_certs: "{{ controller_validate_certs|bool }}"
+            gateway_hostname: "{{ aap_hostname }}"
+            gateway_username: "{{ aap_username }}"
+            gateway_password: "{{ aap_password }}"
+            validate_certs: "{{ aap_validate_certs|bool }}"
           register: aap_token
 
-        - debug: var=aap_token
-
-        - debug: var=aap_token.ansible_facts.aap_token.created
+        # - debug: var=aap_token
+        # - debug: var=aap_token.ansible_facts.aap_token.created
 
         - name: Create organization
           ansible.platform.organization:
@@ -42,7 +41,18 @@
             gateway_hostname: "{{ controller_hostname }}"
             gateway_token: "{{ aap_token.ansible_facts.aap_token.token }}"
             description: "This is a test organization"
-            validate_certs: "{{ controller_validate_certs|bool }}"
+            validate_certs: "{{ aap_validate_certs|bool }}"
+
+        - name: Create Project
+          ansible.controller.project:
+            name: "Foo"
+            description: "Foo bar project"
+            organization: "Test Organization"
+            state: present
+            controller_username: "{{ aap_username}}"
+            controller_password: "{{ aap_password }}"
+            controller_host: "{{ aap_hostname}}"
+            validate_certs: "{{ aap_validate_certs|bool }}"
 
   post_tasks:
     - name: "Delete the Authentication Token used"

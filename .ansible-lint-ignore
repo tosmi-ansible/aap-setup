@@ -1,0 +1,2 @@
+# created by 'IntelliJ Ansible Lint Plugin'
+playbooks/aap-kubevirt-deploy.yaml no-handler

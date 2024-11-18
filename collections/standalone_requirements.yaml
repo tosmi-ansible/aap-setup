@@ -26,13 +26,13 @@ collections:
     source: https://console.redhat.com/api/automation-hub/
 
   - name: ansible.controller
-    version: 4.6.1
+    version: 4.6.2
     source: https://console.redhat.com/api/automation-hub/
 
   - name: ansible.platform
-    version: 2.5.0
+    version: 2.5.3
     source: https://console.redhat.com/api/automation-hub/
 
-  - name:  redhat.satellite
+  - name: redhat.satellite
     version: 4.2.0
     source: https://console.redhat.com/api/automation-hub/

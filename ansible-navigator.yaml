@@ -18,10 +18,10 @@ ansible-navigator:
         - K8S_AUTH_API_KEY
     pull:
       policy: missing
-    # volume-mounts:
-    #   - src: "/tmp/ansible-lab"
-    #     dest: "/tmp"
-    #     options: "Z"
+    volume-mounts:
+      - src: "/home/pinhead/git/ansible/collections"
+        dest: "/tmp/collections"
+        options: "Z"
 
   logging:
     level: critical

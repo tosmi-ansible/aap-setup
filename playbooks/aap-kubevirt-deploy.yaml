@@ -2,6 +2,8 @@
 - name: Create VM's required for an AAP installation
   gather_facts: false
   become: false
+  tags:
+    - vms
   hosts:
     - localhost
   roles:
@@ -12,59 +14,14 @@
       namespace: aap
       ssh_public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYhjnWzsArZVyyTa1E6sDbH06rUGDAhAF3bf3pmeBtm toni@stderr.at
       vms:
-        - name: gateway01
-          datasource: rhel9
-          storage: 40Gi
-          memory: 8Gi
-          cores: 2
-          mac: 02:e0:d7:00:00:17
-        - name: controller01
-          datasource: rhel9
-          storage: 60Gi
-          memory: 16Gi
-          cores: 4
-          mac: 02:e0:d7:00:00:16
-        # - name: controller02
-        #   datasource: rhel9
-        #   storage: 60Gi
-        #   memory: 16Gi
-        #   cores: 4
-        #   mac: 02:e0:d7:00:00:0c
-        - name: pgsql
-          datasource: rhel9
-          storage: 100Gi
-          memory: 16Gi
-          cores: 4
-          mac: 02:e0:d7:00:00:0e
-        - name: hub
-          datasource: rhel9
-          storage: 60Gi
-          memory: 8Gi
-          cores: 2
-          mac: 02:e0:d7:00:00:14
-        - name: eda01
-          datasource: rhel9
-          storage: 40Gi
-          memory: 16Gi
-          cores: 4
-          mac: 02:e0:d7:00:00:12
-        - name: exec01
-          datasource: rhel9
-          storage: 40Gi
-          memory: 8Gi
-          cores: 2
-          mac: 02:e0:d7:00:00:13
-        # - name: exec02
-        #   datasource: rhel9
-        #   storage: 40Gi
-        #   memory: 8Gi
-        #   cores: 2
-        #   mac: 02:e0:d7:00:00:15
+        "{{ aap25_vms }}"
 
 - name: Red Hat registration
   gather_facts: false
   become: true
   remote_user: admin
+  tags:
+    - register
   hosts:
     - namespace_aap
   tasks:
@@ -96,7 +53,9 @@
 - name: Prepare AAP installation
   gather_facts: false
   remote_user: admin
-  become: true
+  become: false
+  tags:
+    - prepare
   hosts:
     - controller01.lan.stderr.at
 
@@ -105,10 +64,16 @@
       ansible.builtin.copy:
         content: "{{ controller_custom_ca_certificates }}"
         dest: /etc/pki/ca-trust/source/anchors/tntinfra-ca.crt
+        mode: "0644"
+      become: true
       register: controller_copy_ca_trust
+
     - name: Update system CA trust store
       ansible.builtin.command: update-ca-trust
       when: controller_copy_ca_trust.changed
+      register: _aap_kubevirt_vms_update_ca_trust
+      become: true
+      changed_when: _aap_kubevirt_vms_update_ca_trust.rc != 0
 
   roles:
     - { role: infra.aap_utilities.aap_setup_download }

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="OrchidESettings">
+    <option name="enabledCollections">
+      <map>
+        <entry key="ansible">
+          <value>
+            <OrchideSettingsCollectionsConfig>
+              <option name="collections">
+                <map>
+                  <entry key="builtin">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="builtin" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="netcommon">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="netcommon" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="posix">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="posix" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="utils">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="utils" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="windows">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="windows" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="enabled" value="YES" />
+              <option name="namespace" value="ansible" />
+            </OrchideSettingsCollectionsConfig>
+          </value>
+        </entry>
+        <entry key="chocolatey">
+          <value>
+            <OrchideSettingsCollectionsConfig>
+              <option name="collections">
+                <map>
+                  <entry key="chocolatey">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="chocolatey" />
+                        <option name="enabled" value="NO" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="enabled" value="NO" />
+              <option name="namespace" value="chocolatey" />
+            </OrchideSettingsCollectionsConfig>
+          </value>
+        </entry>
+        <entry key="community">
+          <value>
+            <OrchideSettingsCollectionsConfig>
+              <option name="collections">
+                <map>
+                  <entry key="crypto">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="crypto" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="dns">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="dns" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="docker">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="docker" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="general">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="general" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="mysql">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="mysql" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="postgresql">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="postgresql" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="proxysql">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="proxysql" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="rabbitmq">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="rabbitmq" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="vmware">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="vmware" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="windows">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="windows" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                  <entry key="zabbix">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="zabbix" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="enabled" value="YES" />
+              <option name="namespace" value="community" />
+            </OrchideSettingsCollectionsConfig>
+          </value>
+        </entry>
+        <entry key="containers">
+          <value>
+            <OrchideSettingsCollectionsConfig>
+              <option name="collections">
+                <map>
+                  <entry key="podman">
+                    <value>
+                      <OrchideSettingsCollection>
+                        <option name="collection" value="podman" />
+                      </OrchideSettingsCollection>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="enabled" value="YES" />
+              <option name="namespace" value="containers" />
+            </OrchideSettingsCollectionsConfig>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

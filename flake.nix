@@ -18,6 +18,7 @@
       {
         devShells.default = pkgs.mkShell {
           packages = [
+            pkgs.pre-commit
             pkgs.gitleaks
 
             pkgs.ansible

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/aap-setup.iml" filepath="$PROJECT_DIR$/.idea/aap-setup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.direnv/flake-inputs/k251vbbhlk91xwjkxnma7g545i5avhah-source/pkgs/development/development.iml" filepath="$PROJECT_DIR$/.direnv/flake-inputs/k251vbbhlk91xwjkxnma7g545i5avhah-source/pkgs/development/development.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../filetree-export/filetree-export.iml" filepath="$PROJECT_DIR$/../filetree-export/filetree-export.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.direnv/flake-inputs/k251vbbhlk91xwjkxnma7g545i5avhah-source/nixos/nixos.iml" filepath="$PROJECT_DIR$/.direnv/flake-inputs/k251vbbhlk91xwjkxnma7g545i5avhah-source/nixos/nixos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.direnv/flake-inputs/k251vbbhlk91xwjkxnma7g545i5avhah-source/pkgs/pkgs-lib/pkgs-lib.iml" filepath="$PROJECT_DIR$/.direnv/flake-inputs/k251vbbhlk91xwjkxnma7g545i5avhah-source/pkgs/pkgs-lib/pkgs-lib.iml" />
+    </modules>
+  </component>
+</project>
