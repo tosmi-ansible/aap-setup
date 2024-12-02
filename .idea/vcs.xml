@@ -3,6 +3,5 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../aap-platform-inventory" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../filetree-export" vcs="Git" />
   </component>
 </project>

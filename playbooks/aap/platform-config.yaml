@@ -45,14 +45,43 @@
 
         - name: Create Project
           ansible.controller.project:
-            name: "Foo"
-            description: "Foo bar project"
+            name: "Playground"
+            description: "Playground project"
             organization: "Test Organization"
+            scm_type: "git"
+            scm_url: "https://github.com/tosmi-ansible/ansible-playground.git"
             state: present
             controller_username: "{{ aap_username}}"
             controller_password: "{{ aap_password }}"
             controller_host: "{{ aap_hostname}}"
             validate_certs: "{{ aap_validate_certs|bool }}"
+
+        - name: Create test inventory
+          ansible.controller.inventory:
+            name: "Test inventory"
+            description: "This is a test inventory"
+            organization: "Test Organization"
+            controller_username: "{{ aap_username}}"
+            controller_password: "{{ aap_password }}"
+            controller_host: "{{ aap_hostname}}"
+            validate_certs: "{{ aap_validate_certs|bool }}"
+
+        - name: Create test inventory source from playground
+          ansible.controller.inventory_source:
+            name: "Playground dynamic plugin source"
+            inventory: "Test inventory"
+            source: "scm"
+            source_project: "Playground"
+            source_path: "inventory/"
+            description: "Playground inventory source"
+            organization: "Test Organization"
+            controller_username: "{{ aap_username}}"
+            controller_password: "{{ aap_password }}"
+            controller_host: "{{ aap_hostname}}"
+            validate_certs: "{{ aap_validate_certs|bool }}"
+            source_vars:
+              ANSIBLE_INVENTORY_ENABLE: example
+
 
   post_tasks:
     - name: "Delete the Authentication Token used"
