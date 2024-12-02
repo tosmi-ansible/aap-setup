@@ -13,7 +13,7 @@
     controller_configuration_projects_async_delay: 2
     controller_username: "{{ aap_username}}"
     controller_password: "{{ aap_password_password }}"
-    controller_hostname: "{{ aap_hostname}}"
+    controller_hostname: "{{ aap_hostname }}"
     controller_validate_certs: "{{ aap_validate_certs }}"
     # filetree_controller_projects: "{{ dir_orgs_vars }}/{{ orgs }}/env/local/controller_projects.d/"
     orgs: stderr
@@ -29,7 +29,7 @@
             gateway_hostname: "{{ aap_hostname }}"
             gateway_username: "{{ aap_username }}"
             gateway_password: "{{ aap_password }}"
-            validate_certs: "{{ aap_validate_certs|bool }}"
+            validate_certs: "{{ aap_validate_certs | bool }}"
           register: aap_token
 
         # - debug: var=aap_token
@@ -41,7 +41,7 @@
             gateway_hostname: "{{ controller_hostname }}"
             gateway_token: "{{ aap_token.ansible_facts.aap_token.token }}"
             description: "This is a test organization"
-            validate_certs: "{{ aap_validate_certs|bool }}"
+            validate_certs: "{{ aap_validate_certs | bool }}"
 
         - name: Create Project
           ansible.controller.project:
@@ -54,7 +54,7 @@
             controller_username: "{{ aap_username}}"
             controller_password: "{{ aap_password }}"
             controller_host: "{{ aap_hostname}}"
-            validate_certs: "{{ aap_validate_certs|bool }}"
+            validate_certs: "{{ aap_validate_certs | bool }}"
 
         - name: Create test inventory
           ansible.controller.inventory:
@@ -63,8 +63,8 @@
             organization: "Test Organization"
             controller_username: "{{ aap_username}}"
             controller_password: "{{ aap_password }}"
-            controller_host: "{{ aap_hostname}}"
-            validate_certs: "{{ aap_validate_certs|bool }}"
+            controller_host: "{{ aap_hostname }}"
+            validate_certs: "{{ aap_validate_certs | bool }}"
 
         - name: Create test inventory source from playground
           ansible.controller.inventory_source:
@@ -75,13 +75,10 @@
             source_path: "inventory/"
             description: "Playground inventory source"
             organization: "Test Organization"
-            controller_username: "{{ aap_username}}"
+            controller_username: "{{ aap_username }}"
             controller_password: "{{ aap_password }}"
-            controller_host: "{{ aap_hostname}}"
-            validate_certs: "{{ aap_validate_certs|bool }}"
-            source_vars:
-              ANSIBLE_INVENTORY_ENABLE: example
-
+            controller_host: "{{ aap_hostname }}"
+            validate_certs: "{{ aap_validate_certs | bool }}"
 
   post_tasks:
     - name: "Delete the Authentication Token used"
