@@ -51,9 +51,9 @@
             scm_type: "git"
             scm_url: "https://github.com/tosmi-ansible/ansible-playground.git"
             state: present
-            controller_username: "{{ aap_username}}"
+            controller_username: "{{ aap_username }}"
             controller_password: "{{ aap_password }}"
-            controller_host: "{{ aap_hostname}}"
+            controller_host: "{{ aap_hostname }}"
             validate_certs: "{{ aap_validate_certs | bool }}"
 
         - name: Create test inventory
@@ -61,7 +61,7 @@
             name: "Test inventory"
             description: "This is a test inventory"
             organization: "Test Organization"
-            controller_username: "{{ aap_username}}"
+            controller_username: "{{ aap_username }}"
             controller_password: "{{ aap_password }}"
             controller_host: "{{ aap_hostname }}"
             validate_certs: "{{ aap_validate_certs | bool }}"

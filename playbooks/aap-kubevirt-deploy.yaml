@@ -73,7 +73,7 @@
       when: controller_copy_ca_trust.changed
       register: _aap_kubevirt_vms_update_ca_trust
       become: true
-      changed_when: _aap_kubevirt_vms_update_ca_trust.rc != 0
+      changed_when: _aap_kubevirt_vms_update_ca_trust.rc != 0 # noqa: no-handler
 
   roles:
     - { role: infra.aap_utilities.aap_setup_download }
