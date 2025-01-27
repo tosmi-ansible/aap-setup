@@ -1,7 +1,7 @@
 {
   description = "Ansible Lab Environment";
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -22,7 +22,6 @@
             pkgs.gitleaks
 
             pkgs.ansible
-            pkgs.ansible-lint
             pkgs.ansible-navigator
             pkgs.ansible-builder
             pkgs.glibcLocales
