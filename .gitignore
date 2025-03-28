@@ -1,2 +1,3 @@
 /.direnv/
 /ansible-navigator.log
+/.ansible/

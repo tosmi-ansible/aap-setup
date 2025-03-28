@@ -1,0 +1,11 @@
+---
+- name: AAP Configuration
+  hosts:
+    - all
+  connection: local
+  run_once: true
+  gather_facts: false
+
+  roles:
+    - infra.aap_configuration.dispatch
+...

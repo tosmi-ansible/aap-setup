@@ -78,6 +78,7 @@
     <option name="orchidePlaybookLocations">
       <list>
         <option value="$PROJECT_DIR$/playbooks" />
+        <option value="$PROJECT_DIR$/playbooks/aap" />
       </list>
     </option>
     <option name="playbookPatternForOtherAnsibleTypes">

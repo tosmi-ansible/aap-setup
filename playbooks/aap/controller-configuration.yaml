@@ -1,3 +1,6 @@
+#
+# WARNING: This is only for AAP version <= 2.4
+#
 ---
 - name: AAP Configuration
   hosts:

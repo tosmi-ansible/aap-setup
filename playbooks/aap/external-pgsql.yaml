@@ -1,0 +1,62 @@
+---
+- name: Provision an external postgresql database
+  hosts: pgsql.lan.stderr.at
+  gather_facts: true
+  become: true
+  remote_user: admin
+  tasks:
+    - name: Create a user for running the pgsql container
+      ansible.builtin.user:
+        name: pgsql
+        groups:
+          - systemd-journal
+
+    - name: Create config directory for containers
+      ansible.builtin.file:
+        path: /home/pgsql/.config/containers
+        owner: pgsql
+        mode: "0700"
+        state: directory
+
+    - name: Create data directory for pgsqwl
+      ansible.builtin.file:
+        path: /home/pgsql/data
+        owner: pgsql
+        mode: "0700"
+        state: directory
+
+    - name: Create auth file for redhat registry
+      ansible.builtin.copy:
+        dest: /home/pgsql/.config/containers/auth.json
+        owner: pgsql
+        mode: "0600"
+        content: "{{ registry_password }}"
+
+    - name: Manage the postgresql data volume
+      become: true
+      become_user: pgsql
+      containers.podman.podman_volume:
+        name: postgresql
+        state: present
+
+    - name: Deploy pgsql container
+      become: true
+      become_user: pgsql
+      containers.podman.podman_container:
+        name: postgresql_external
+        image: registry.redhat.io/rhel8/postgresql-15:latest
+        generate_systemd:
+          container_prefix: ''
+          path: "/home/pgsql/.config/systemd/user"
+          separator: ''
+        network: host
+        volume:
+          - "postgresql:/var/lib/pgsql/data:Z"
+        env:
+          PGPORT: 5433
+          POSTGRESQL_ADMIN_PASSWORD: "{{ aap_setup_prep_inv_vars.all.postgresql_admin_password }}"
+        state: started
+        quadlet_filename: postgresql-external
+        quadlet_file_mode: '0640'
+
+...
