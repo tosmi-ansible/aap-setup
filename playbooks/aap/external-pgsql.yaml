@@ -30,7 +30,7 @@
         dest: /home/pgsql/.config/containers/auth.json
         owner: pgsql
         mode: "0600"
-        content: "{{ registry_password }}"
+        content: "{{ aap_setup_prep_inv_vars.all.registry_password }}"
 
     - name: Manage the postgresql data volume
       become: true
