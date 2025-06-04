@@ -50,7 +50,7 @@ collections:
     source: https://galaxy.ansible.com
 
   - name: infra.aap_utilities
-    version: 2.6.0
+    version: 2.6.1
     source: https://galaxy.ansible.com
 
   - name: infra.controller_configuration
