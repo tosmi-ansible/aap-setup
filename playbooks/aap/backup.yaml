@@ -1,0 +1,32 @@
+- name: Trigger an AAP Backup
+  hosts:
+    - localhost
+  vars:
+    backup_dir: /home/pinhead/tmp/aap-backups
+    rotation: weekdays
+    setup_bundle: /home/pinhead/tmp/aap-backups/ansible-automation-platform-containerized-setup-2.5-14
+    inventory: /home/pinhead/tmp/aap-backups/inventory
+
+  tasks:
+    - name: Collect date / time facts
+      ansible.builtin.setup:
+        filter:
+          - 'ansible_date_time'
+
+    - name: Wipe the old backup
+      ansible.builtin.file:
+        path: "{{ backup_dir }}/{{ ansible_date_time.weekday }}"
+        mode: '0700'
+        state: absent
+
+    - name: Create a backup destination directory
+      ansible.builtin.file:
+        path: "{{ backup_dir }}/{{ ansible_date_time.weekday }}"
+        mode: '0700'
+        state: directory
+
+    - name: Trigger a backup
+      ansible.builtin.command:
+        cmd: ansible-playbook -i "{{ setup_bundle }}/inventory" ansible.containerized_installer.backup -d "{{ backup_dir }}/{{ ansible_date_time.weekday }}"
+        chdir: "{{ setup_bundle }}"
+      changed_when: false
