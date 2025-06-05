@@ -1,9 +1,12 @@
+---
 - name: Trigger an AAP Backup
   hosts:
     - localhost
+  gather_facts: false
   vars:
-    backup_dir: /home/pinhead/tmp/aap-backups
+    backup_basedir: /home/pinhead/tmp/aap-backups
     rotation: weekdays
+    expire: 10d
     setup_bundle: /home/pinhead/tmp/aap-backups/ansible-automation-platform-containerized-setup-2.5-14
     inventory: /home/pinhead/tmp/aap-backups/inventory
 
@@ -13,20 +16,67 @@
         filter:
           - 'ansible_date_time'
 
-    - name: Wipe the old backup
-      ansible.builtin.file:
-        path: "{{ backup_dir }}/{{ ansible_date_time.weekday }}"
-        mode: '0700'
-        state: absent
+    - name: Backup with a weekday rotation
+      when:
+        - rotation is defined
+        - rotation == "weekdays"
+      block:
+        - name: Set backup_dir fact for backup playbook
+          ansible.builtin.set_fact:
+            backup_dir: "{{  backup_basedir }}/{{ ansible_date_time.weekday }}"
+
+        - name: Wipe the old backup of today
+          ansible.builtin.file:
+            path: "{{ backup_dir }}"
+            mode: '0700'
+            state: absent
+
+    - name: Backup with a daily rotation and expire old backups (default)
+      when:
+        - rotation is not defined or rotation == "daily"
+      block:
+        - name: Set backup_dir fact for backup playbook
+          ansible.builtin.set_fact:
+            backup_dir: "{{  backup_basedir }}/{{ ansible_date_time.date }}"
+
+        - name: Find backups old than {{ expire }}
+          ansible.builtin.find:
+            paths: "{{ backup_basedir }}"
+            age: "{{ expire }}"
+            recurse: false
+            file_type: directory
+          register: _backup_old_backups
+
+        - name: Remove backups older than {{ expire }}
+          ansible.builtin.file:
+            path: "{{ item.path }}"
+            state: absent
+          loop: "{{  _backup_old_backups.files }}"
 
     - name: Create a backup destination directory
       ansible.builtin.file:
-        path: "{{ backup_dir }}/{{ ansible_date_time.weekday }}"
+        path: "{{ backup_dir }}"
         mode: '0700'
         state: directory
 
-    - name: Trigger a backup
+    - name: Trigger a backup (this will take some time)...
       ansible.builtin.command:
-        cmd: ansible-playbook -i "{{ setup_bundle }}/inventory" ansible.containerized_installer.backup -d "{{ backup_dir }}/{{ ansible_date_time.weekday }}"
+        cmd: ansible-playbook -i "{{ setup_bundle }}/inventory" ansible.containerized_installer.backup -e "backup_dir={{ backup_dir }}"
         chdir: "{{ setup_bundle }}"
       changed_when: false
+      async: 3600
+      poll: 10
+
+# requires
+#
+# ANSIBLE_COLLECTIONS_PATH=.../ansible-automation-platform-containerized-setup-2.5-14/collections
+# ANSIBLE_ROLES_PATH=../ansible-automation-platform-containerized-setup-2.5-14/collections/ansible_collections/ansible/containerized_installer/roles/
+# to be set
+
+# - name: Trigger an AAP Backup
+#   ansible.builtin.import_playbook: "{{ setup_bundle }}/{{ backup_playbook }}"
+#   vars:
+#     setup_bundle: "/home/pinhead/tmp/aap-backups/ansible-automation-platform-containerized-setup-2.5-14"
+#     backup_playbook: "collections/ansible_collections/ansible/containerized_installer/playbooks/backup.yml"
+#     # backup_dir: "{{  backup_basedir }}/{{ ansible_date_time.weekday }}"
+#     backup_dir: "{{ hostvars['localhost']['backup_dir'] }}"
