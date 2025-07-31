@@ -9,12 +9,17 @@
     expire: 10d
     setup_bundle: /home/pinhead/tmp/aap-backups/ansible-automation-platform-containerized-setup-2.5-14
     inventory: /home/pinhead/tmp/aap-backups/inventory
+    backup_environment: test
 
   tasks:
     - name: Collect date / time facts
       ansible.builtin.setup:
         filter:
           - 'ansible_date_time'
+
+    - name: Set global facts
+      ansible.builtin.set_fact:
+        _backup_inventory: "/home/bla/{{ backup_environment }}.ini"
 
     - name: Backup with a weekday rotation
       when:
