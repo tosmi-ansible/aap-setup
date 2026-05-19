@@ -52,7 +52,7 @@ collections:
     # source: https://console.redhat.com/api/automation-hub/
 
   - name: infra.aap_configuration
-    version: 3.9.1
+    version: 4.5.0
     source: https://aap.apps.hub.aws.tntinfra.net/api/galaxy/content/validated/
     # source: https://galaxy.ansible.com
 
