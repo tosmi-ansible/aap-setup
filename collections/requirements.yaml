@@ -17,7 +17,7 @@ collections:
     # source: https://console.redhat.com/api/automation-hub/
 
   - name: ansible.posix
-    version: 1.6.1
+    version: 1.6.2
     source: https://aap.apps.hub.aws.tntinfra.net/api/galaxy/content/rh-certified/
     # source: https://galaxy.ansible.com
 
