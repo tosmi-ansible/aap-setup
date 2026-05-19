@@ -22,7 +22,7 @@ collections:
     # source: https://galaxy.ansible.com
 
   - name: ansible.scm
-    version: 3.0.0
+    version: 3.2.1
     source: https://aap.apps.hub.aws.tntinfra.net/api/galaxy/content/rh-certified/
     # source: https://console.redhat.com/api/automation-hub/
 
