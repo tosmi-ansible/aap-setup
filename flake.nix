@@ -29,6 +29,7 @@
             pkgs.yamllint
             pkgs.kubevirt
             pkgs.python312Packages.kubernetes
+            pkgs.renovate
           ];
         };
       });
