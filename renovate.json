@@ -14,7 +14,7 @@
 	},
 	{
 	    "matchDatasources": ["github-tags"],
-	    "enabled": "false"
+	    "enabled": false
 	}
     ]
 }
