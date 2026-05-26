@@ -3,18 +3,5 @@
     "extends": [
 	"tosmi-ansible/renovate-config",
 	"config:best-practices"
-    ],
-    "timezone": "Europe/London",
-    "schedule": [
-        "at any time"
-    ],
-    "packageRules": [
-	{
-	    "matchDatasources": ["galaxy-collection"]
-	},
-	{
-	    "matchDatasources": ["github-tags"],
-	    "enabled": "false"
-	}
     ]
 }
