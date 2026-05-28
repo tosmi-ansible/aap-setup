@@ -27,7 +27,7 @@ collections:
     # source: https://console.redhat.com/api/automation-hub/
 
   - name: ansible.controller
-    version: 4.6.10
+    version: 4.7.11
     source: https://aap.apps.hub.aws.tntinfra.net/api/galaxy/content/rh-certified/
     # source: https://console.redhat.com/api/automation-hub/
 
