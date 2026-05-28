@@ -7,7 +7,7 @@ collections:
     # source: https://console.redhat.com/api/automation-hub/
 
   - name: redhat.openshift_virtualization
-    version: 2.1.0
+    version: 2.2.4
     source: https://aap.apps.hub.aws.tntinfra.net/api/galaxy/content/rh-certified/
     # source: https://console.redhat.com/api/automation-hub/
 
