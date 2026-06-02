@@ -32,7 +32,7 @@ collections:
     # source: https://console.redhat.com/api/automation-hub/
 
   - name: ansible.platform
-    version: 2.5.20250213
+    version: 2.6.20260504
     source: https://aap.apps.hub.aws.tntinfra.net/api/galaxy/content/rh-certified/
     # source: https://console.redhat.com/api/automation-hub/
 
