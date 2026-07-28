@@ -25,11 +25,11 @@
   hosts:
     - namespace_aap
   tasks:
-    - name: Run subscription-manager registery
+    - name: Register RHEL system
       community.general.redhat_subscription:
         state: present
         org_id: "13048846"
-        activationkey: Playground
+        activationkey: "{{ activation_key_id }}"
 
     - name: Register the insights client
       redhat.insights.insights_register:
@@ -57,7 +57,7 @@
   tags:
     - prepare
   hosts:
-    - aap.lan.stderr.at
+    - aap
 
   pre_tasks:
     - name: Copy custom CA certificates to controller
@@ -74,6 +74,8 @@
       register: _aap_kubevirt_vms_update_ca_trust
       become: true
       changed_when: _aap_kubevirt_vms_update_ca_trust.rc != 0 # noqa: no-handler
+
+    - debug: var=aap_setup_down_offline_token
 
   roles:
     - { role: infra.aap_utilities.aap_setup_download }
